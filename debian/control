@@ -1,15 +1,41 @@
-Source: template-repository
-Section: unknown
+Source: golang-github-gin-gonic-gin
+Section: devel
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Maintainer: Debian Go Packaging Team <team+pkg-go@tracker.debian.org>
+Uploaders: Shengjing Zhu <zhsj@debian.org>
+Build-Depends: debhelper (>= 11),
+               dh-golang,
+               golang-any,
+               golang-github-gin-contrib-sse-dev,
+               golang-github-go-playground-validator-v10-dev,
+               golang-github-mattn-go-isatty-dev,
+               golang-github-pelletier-go-toml.v2-dev,
+               golang-github-stretchr-testify-dev,
+               golang-github-ugorji-go-codec-dev,
+               golang-golang-x-net-dev,
+               golang-gopkg-yaml.v2-dev,
+               golang-google-protobuf-dev,
+               tzdata <!nocheck>
+Standards-Version: 4.2.1
+Homepage: https://github.com/gin-gonic/gin
+Vcs-Browser: https://salsa.debian.org/go-team/packages/golang-github-gin-gonic-gin
+Vcs-Git: https://salsa.debian.org/go-team/packages/golang-github-gin-gonic-gin.git
+XS-Go-Import-Path: github.com/gin-gonic/gin
+Testsuite: autopkgtest-pkg-go
 
-Package: template-repository
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Package: golang-github-gin-gonic-gin-dev
+Architecture: all
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         golang-github-gin-contrib-sse-dev,
+         golang-github-go-playground-validator-v10-dev,
+         golang-github-mattn-go-isatty-dev,
+         golang-github-pelletier-go-toml.v2-dev,
+         golang-github-ugorji-go-codec-dev,
+         golang-golang-x-net-dev,
+         golang-gopkg-yaml.v2-dev,
+         golang-google-protobuf-dev
+Description: HTTP web framework written in Go
+ Gin is a web framework written in Go (Golang). It features a martini-like API
+ with much better performance, up to 40 times faster thanks to httprouter. If
+ you need performance and good productivity, you will love Gin.

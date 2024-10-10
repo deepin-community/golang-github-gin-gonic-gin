@@ -1,0 +1,63 @@
+From: Cyril Brulebois <cyril@debamax.com>
+Date: Tue, 11 Oct 2022 07:59:41 +0000
+Subject: [PATCH] Test suite: add support for Go 1.19
+
+Cherry-pick the new test file for Go 1.19 (from the mstmdev:support_go1.19
+branch), and add build restrictions for the old test file (instead of
+introducing functions checking the actual Go version).
+
+Bug-Upstream: https://github.com/gin-gonic/gin/pull/3272
+
+---
+ context_1.17_test.go |  4 ++--
+ context_1.19_test.go | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
+ create mode 100644 context_1.19_test.go
+
+--- a/context_1.17_test.go
++++ b/context_1.17_test.go
+@@ -2,8 +2,8 @@
+ // Use of this source code is governed by a MIT style
+ // license that can be found in the LICENSE file.
+ 
+-//go:build go1.17
+-// +build go1.17
++//go:build go1.17 && !go1.19
++// +build go1.17,!go1.19
+ 
+ package gin
+ 
+--- /dev/null
++++ b/context_1.19_test.go
+@@ -0,0 +1,31 @@
++// Copyright 2022 Gin Core Team. All rights reserved.
++// Use of this source code is governed by a MIT style
++// license that can be found in the LICENSE file.
++
++//go:build go1.19
++// +build go1.19
++
++package gin
++
++import (
++	"bytes"
++	"mime/multipart"
++	"net/http"
++	"net/http/httptest"
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func TestContextFormFileFailed19(t *testing.T) {
++	buf := new(bytes.Buffer)
++	mw := multipart.NewWriter(buf)
++	mw.Close()
++	c, _ := CreateTestContext(httptest.NewRecorder())
++	c.Request, _ = http.NewRequest("POST", "/", nil)
++	c.Request.Header.Set("Content-Type", mw.FormDataContentType())
++	c.engine.MaxMultipartMemory = 8 << 20
++	f, err := c.FormFile("file")
++	assert.Error(t, err)
++	assert.Nil(t, f)
++}

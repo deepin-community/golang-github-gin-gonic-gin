@@ -1,5 +1,118 @@
-template-repository (1.0-1) unstable; urgency=medium
+golang-github-gin-gonic-gin (1.8.1-2) unstable; urgency=medium
 
-  * Initial release
+  * Team Upload.
+  * Add golang-golang-x-net-dev to Depends (Closes: #1054845)
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Nilesh Patra <nilesh@debian.org>  Tue, 31 Oct 2023 03:58:21 +0530
+
+golang-github-gin-gonic-gin (1.8.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Delete patches:
+     - 0001-adjust-test-parameters.patch: no longer needed, the relevant
+       tests have been marked as legacy and commented out.
+     - 0002-binding-avoid-2038-problem-on-32-bit-architectures.patch: no
+       longer needed (backported from upstream master at the time).
+     - 0004-fix-test-failure-with-go-1.17.patch: merged upstream.
+  * Add patch:
+     - 0004-test-suite-add-support-for-Go-1.19.patch: cherry-pick bits
+       from https://github.com/gin-gonic/gin/pull/3272 to add support for
+       Go 1.19.
+  * Update (Build-|)Depends:
+     - Add golang-github-pelletier-go-toml.v2-dev
+     - Replace golang-goprotobuf-dev with golang-google-protobuf-dev
+
+ -- Cyril Brulebois <cyril@debamax.com>  Thu, 13 Oct 2022 18:27:57 +0000
+
+golang-github-gin-gonic-gin (1.6.3-4) unstable; urgency=medium
+
+  * Team upload.
+
+  [ William 'jawn-smith' Wilson ]
+  * Cherry Pick upstream patch that fixes FTBFS with Go 1.17
+    (Closes: 994254)
+
+ -- Michael Hudson-Doyle <mwhudson@debian.org>  Thu, 16 Sep 2021 11:55:49 +1200
+
+golang-github-gin-gonic-gin (1.6.3-3) unstable; urgency=medium
+
+  * Don't fail the test suite in case TestPathCleanMallocs fails, this
+    test seems flaky:
+     + 0003-avoid-failures-on-flaky-test.patch
+
+ -- Cyril Brulebois <cyril@debamax.com>  Sun, 10 Jan 2021 06:21:12 +0000
+
+golang-github-gin-gonic-gin (1.6.3-2) unstable; urgency=medium
+
+  * Backport upstream fix for 32-bit architectures: request parsing a
+    64-bit integer explicitly to avoid depending on the host's bit size:
+     + 0002-binding-avoid-2038-problem-on-32-bit-architectures.patch
+
+ -- Cyril Brulebois <cyril@debamax.com>  Sat, 09 Jan 2021 18:50:03 +0000
+
+golang-github-gin-gonic-gin (1.6.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Stop repacking upstream sources: all examples have been moved to a
+    separate repository.
+  * Delete patch changing listening port of test server:
+     - It doesn't apply any longer.
+     - It switched the listening port from 8888 to 9888.
+     - gin_integration_test now uses 3123 by default. If this fails on
+       buildds, it can be adjusted then.
+  * Replace golang-gopkg-go-playground-validator.v8-dev with
+    golang-github-go-playground-validator-v10-dev in (Build-)Depends.
+  * Pass --builddirectory=_build to dh, to have the same build directory
+    on all architectures.
+  * Add patch to make the test (UNIX) socket location configurable: it's
+    not really OK to write outside the build directory (/tmp), especially
+    if one is leaving the test socket behind.
+  * Set TEST_SOCKET_DIR to the build directory for the dh_auto_test call,
+    leveraging the aforementioned patch.
+  * Refresh copyright information.
+
+ -- Cyril Brulebois <cyril@debamax.com>  Fri, 08 Jan 2021 22:10:19 +0000
+
+golang-github-gin-gonic-gin (1.3.0+dfsg1-3) unstable; urgency=medium
+
+  * Team upload.
+  * Build-Depend on tzdata (closes: #911912)
+
+ -- Paride Legovini <pl@ninthfloor.org>  Thu, 08 Nov 2018 21:47:42 +0000
+
+golang-github-gin-gonic-gin (1.3.0+dfsg1-2) unstable; urgency=medium
+
+  * Add patch to change listen port of test server.
+    Fix ftbfs on buildd.
+
+ -- Shengjing Zhu <zhsj@debian.org>  Tue, 18 Sep 2018 12:42:55 +0800
+
+golang-github-gin-gonic-gin (1.3.0+dfsg1-1) unstable; urgency=medium
+
+  [ Alexandre Viau ]
+  * Point Vcs-* urls to salsa.debian.org.
+
+  [ Shengjing Zhu ]
+  * New upstream release 1.3.0+dfsg1.
+    + Fix TestRouterNotFound. (Closes: #890924)
+  * Remove patches applied in new version.
+  * New copyright holder in new upstream release.
+  * update debhelper and compat to 11
+  * update Standards-Version to 4.2.1, change Priority to optional
+  * d/control: change team email address to tracker.d.o
+  * Update my email address to zhsj@debian.org.
+
+ -- Shengjing Zhu <zhsj@debian.org>  Tue, 18 Sep 2018 11:18:24 +0800
+
+golang-github-gin-gonic-gin (1.2+dfsg1-2) unstable; urgency=medium
+
+  * Add patch to fix random failed test
+    0001-fix-tests-use-assert.Regep-instead-of-assert.Equal.patch
+
+ -- Shengjing Zhu <i@zhsj.me>  Sat, 19 Aug 2017 20:57:54 +0800
+
+golang-github-gin-gonic-gin (1.2+dfsg1-1) unstable; urgency=medium
+
+  * Initial release (Closes: #865134)
+
+ -- Shengjing Zhu <i@zhsj.me>  Fri, 04 Aug 2017 00:39:04 +0800
